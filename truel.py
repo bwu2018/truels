@@ -20,7 +20,7 @@ def run_sim():
               "p3_target", "p1_survive", "p2_survive", "p3_survive"]
     rows = []
 
-    iterations = 1
+    iterations = 500
     for i in range(iterations):
         p1_loc, p2_loc, p3_loc = random_location()
         p1_p2_dist = dist(p1_loc, p2_loc)
@@ -35,9 +35,11 @@ def run_sim():
             p2_p3_dist = dist(p2_loc, p3_loc)
     
         # Should not be same accuracy
-        p1_acc = random.random()
-        p2_acc = random.random()
-        p3_acc = random.random()
+        acccuracies = [random.random(), random.random(), random.random()]
+        acccuracies.sort(reverse=True)
+        p1_acc = acccuracies[0]
+        p2_acc = acccuracies[1]
+        p3_acc = acccuracies[2]
 
         hit_rates = [[0, p1_acc * p1_p2_dist, p1_acc * p1_p3_dist],
                      [p2_acc * p1_p2_dist, 0, p2_acc * p2_p3_dist],
@@ -52,7 +54,7 @@ def run_sim():
                         # k = player 3 shoots player k
                         for k in range(3):
                             if k != 2:
-                                num_runs = 100
+                                num_runs = 1000
                                 player_survives = [0, 0, 0]
                                 for _ in range(num_runs):
                                     players_alive = [0, 1, 2]
