@@ -24,16 +24,16 @@ def run_sim():
     iterations = 1000
     for i in range(iterations):
         p1_loc, p2_loc, p3_loc = random_location()
-        p1_p2_dist = dist(p1_loc, p2_loc)
-        p1_p3_dist = dist(p1_loc, p3_loc)
-        p2_p3_dist = dist(p2_loc, p3_loc)
+        p1_p2_dist = dist(p1_loc, p2_loc) * (1/sqrt(2))
+        p1_p3_dist = dist(p1_loc, p3_loc) * (1/sqrt(2))
+        p2_p3_dist = dist(p2_loc, p3_loc) * (1/sqrt(2))
 
         while p1_p2_dist == p1_p3_dist == p2_p3_dist:
             print("Rerunning due to equal distances")
             p1_loc, p2_loc, p3_loc = random_location()
-            p1_p2_dist = dist(p1_loc, p2_loc)
-            p1_p3_dist = dist(p1_loc, p3_loc)
-            p2_p3_dist = dist(p2_loc, p3_loc)
+            p1_p2_dist = dist(p1_loc, p2_loc) * (1/sqrt(2))
+            p1_p3_dist = dist(p1_loc, p3_loc) * (1/sqrt(2))
+            p2_p3_dist = dist(p2_loc, p3_loc) * (1/sqrt(2))
     
         # Should not be same accuracy
         acccuracies = [random.random(), random.random(), random.random()]
@@ -42,7 +42,7 @@ def run_sim():
         p2_acc = acccuracies[1]
         p3_acc = acccuracies[2]
 
-        distance = sqrt(2)
+        distance = 1
         hit_rates = [[0, p1_acc * (distance - p1_p2_dist), p1_acc * (distance - p1_p3_dist)],
                      [p2_acc * (distance - p1_p2_dist), 0, p2_acc * (distance - p2_p3_dist)],
                      [p3_acc * (distance - p1_p3_dist), p3_acc * (distance - p2_p3_dist), 0]]
