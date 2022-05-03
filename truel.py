@@ -10,9 +10,9 @@ def hit(p):
 
 def random_location():
     # Should not be same location
-    p1_loc = (random.random(), random.random())
-    p2_loc = (random.random(), random.random())
-    p3_loc = (random.random(), random.random())
+    p1_loc = (random.random()/2, random.random()/2)
+    p2_loc = (random.random()/2, random.random()/2)
+    p3_loc = (random.random()/2, random.random()/2)
     return p1_loc, p2_loc, p3_loc
 
 def run_sim():
@@ -20,7 +20,7 @@ def run_sim():
               "p3_target", "p1_survive", "p2_survive", "p3_survive"]
     rows = []
 
-    iterations = 500
+    iterations = 1000
     for i in range(iterations):
         p1_loc, p2_loc, p3_loc = random_location()
         p1_p2_dist = dist(p1_loc, p2_loc)
@@ -41,9 +41,10 @@ def run_sim():
         p2_acc = acccuracies[1]
         p3_acc = acccuracies[2]
 
-        hit_rates = [[0, p1_acc * p1_p2_dist, p1_acc * p1_p3_dist],
-                     [p2_acc * p1_p2_dist, 0, p2_acc * p2_p3_dist],
-                     [p3_acc * p1_p3_dist, p3_acc * p2_p3_dist, 0]]
+        distance = dist((0,0), (0.5, 0.5))
+        hit_rates = [[0, p1_acc * (distance - p1_p2_dist), p1_acc * (distance - p1_p3_dist)],
+                     [p2_acc * (distance - p1_p2_dist), 0, p2_acc * (distance - p2_p3_dist)],
+                     [p3_acc * (distance - p1_p3_dist), p3_acc * (distance - p2_p3_dist), 0]]
 
         # i = player 1 shoots player i
         for i in range(3):
@@ -81,6 +82,7 @@ def run_sim():
                                             player_survives[1]/num_runs,
                                             player_survives[2]/num_runs])
 
+    print("Writing to file")
     filename = "truel.csv"
     with open(filename, 'w') as csvfile: 
         # creating a csv writer object 
